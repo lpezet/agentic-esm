@@ -1,5 +1,5 @@
 {
-  "name": "commonjs-app",
+  "name": "agentic-esm",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
+  "author": "Luke",
   "license": "ISC",
   "description": "",
   "devDependencies": {
