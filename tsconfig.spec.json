@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "ES2020",
+    "target": "ES2022",
     "rootDir": ".",
-    "strict": true,
+    "strict": true, // because of @agentic
     "esModuleInterop": true,
+    "moduleResolution": "node",
+    // "allowJs": true,
+    // "checkJs": true,
     "types": [
       "jest",
       "node"
     ]
   },
+  "exclude": [
+    "babel.config.js",
+  ],
   "include": [
     "jest.config.ts",
     "src/**/*.test.ts",
