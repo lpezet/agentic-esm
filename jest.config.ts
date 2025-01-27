@@ -176,21 +176,19 @@ const config: Config = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.[tj]s$': [
-      // "^.+\\.tsx?$": [
-      "ts-jest",
-      {
-        tsconfig: "tsconfig.spec.json",
-      },
-    ],
+    // '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }], // Use ts-jest to transpile TypeScript
+    // '@agentic.+\\.js$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }], // Use ts-jest to transpile TypeScript
+    'node_modules/@agentic.+\\.js$': 'babel-jest',
+    'node_modules/delay.+\\.js$': 'babel-jest',
+    'node_modules/p-map.+\\.js$': 'babel-jest',
+
+    '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }], // Transpile .ts files
+    //'^.+\\.js$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }], // Transpile .js files, including ESM dependencies
+
   },
-
-  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  // transformIgnorePatterns: [
-  //   "/node_modules/",
-  //   "\\.pnp\\.[^\\/]+$"
-  // ],
-
+  transformIgnorePatterns: [
+    '/node_modules/(?!(@agentic|delay|p-map)/)'
+  ],
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
 
