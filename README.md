@@ -177,7 +177,7 @@ So in the end, if that "language service" was perfect, it should just work, no?
 
 So I get to the point where, I understand things a bit more and I found out where the problem is.
 1. `transformIgnorePatterns` is indeed used by Jest for each file it processes, to figure out whether to ignore it or not. It's used here: https://github.com/jestjs/jest/blob/v29.7.0/packages/jest-transform/src/ScriptTransformer.ts#L839, in the `shouldTransform()` function of the ScriptTransformer. It seems there's a default rule: `/\/node_modules\/|\.pnp\.[^\/]+$/`, which will indeed catch anyting in `node_modules`.
-2. Provided we specify an "exclusion" (inclusion?) rule in `transformIgnorePatterns`, we still have to specify a transformer in `transform`. The reason is that it will go through the rules here: https://github.com/jestjs/jest/blob/v29.7.0/packages/jest-transform/src/ScriptTransformer.ts#L259. In your last example, it will loop only once (only one rulle) and `transformRegExp` would be '^.+\\.ts$' and `transformPath` would be **ts-jest**.
+2. Provided we specify an "exclusion" (inclusion?) rule in `transformIgnorePatterns`, we still have to specify a transformer in `transform`. The reason is that it will go through the rules here: https://github.com/jestjs/jest/blob/v29.7.0/packages/jest-transform/src/ScriptTransformer.ts#L259.
 3. On a side note, the Jest cache intervenes here: https://github.com/jestjs/jest/blob/v29.7.0/packages/jest-transform/src/ScriptTransformer.ts#L493. The transformed code is cached, and if found in the cache, it won't transform the source code again. So calling jest --clearCache is  must when tweaking transform settings for Jest.
 4. This is where the "magic" happens: https://github.com/jestjs/jest/blob/v29.7.0/packages/jest-transform/src/ScriptTransformer.ts#L511. At this point: 1) the file should not be ignored, and 2) we have a rules for transformers and 3) one of those transformer rules matches the file of interest, so 4) we have a transformer for it.
 5. I'll need to look now into that transformer a bit more because I still have issues which I'll discuss below.
@@ -191,7 +191,7 @@ transform: {
     '/node_modules/(?!@agentic/ai-sdk)', // i.e. Do not ignore @agentic libs in node_modules 
   ],
 
-I can see the pattern I have defined to transform @agentic files (i.e. '@agentic.+\\.js$') does match the file of interest here (/home/ubuntu/Work/luc/agentic-esm/node_modules/@agentic/ai-sdk/dist/index.js). But maybe the transformer I specified is not right or a little off.
+I can see the pattern I have defined to transform @agentic files (i.e. '@agentic.+\\.js$') does match the file of interest here (/home/ubuntu/Work/luke/agentic-esm/node_modules/@agentic/ai-sdk/dist/index.js). But maybe the transformer I specified is not right or a little off.
 
 I can see my index.spec.ts source code is transpiled just fine.
 From:
