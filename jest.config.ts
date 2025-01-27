@@ -176,15 +176,11 @@ const config: Config = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    // '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }], // Use ts-jest to transpile TypeScript
-    // '@agentic.+\\.js$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }], // Use ts-jest to transpile TypeScript
     'node_modules/@agentic.+\\.js$': 'babel-jest',
     'node_modules/delay.+\\.js$': 'babel-jest',
     'node_modules/p-map.+\\.js$': 'babel-jest',
 
-    '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }], // Transpile .ts files
-    //'^.+\\.js$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }], // Transpile .js files, including ESM dependencies
-
+    '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.spec.json' }],
   },
   transformIgnorePatterns: [
     '/node_modules/(?!(@agentic|delay|p-map)/)'
